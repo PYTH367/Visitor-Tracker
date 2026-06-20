@@ -9,13 +9,13 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 
 # ⚠️ Change this to your own secret password!
-SECRET_KEY = "chiku@2000"
+SECRET_KEY = "chikumeow"  # change this
 
 VISITORS_FILE = "visitors.json"
 
 def get_location(ip):
     try:
-        if ip == "127.0.0.1" or ip.startswith("192.168") or ip.startswith("10."):
+        if ip == "127.0.0.1" or ip.startswith("192.168"):
             return {
                 "country": "Local Network", "region": "N/A",
                 "city": "N/A", "isp": "N/A", "lat": "N/A", "lon": "N/A"
@@ -76,7 +76,7 @@ def load_visitors():
 
 @app.route('/')
 def home():
-    ip = request.remote_addr
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr).split(",")[0].strip()
     user_agent = request.headers.get('User-Agent', 'Unknown')
     os_name, browser = detect_system(user_agent)
     location = get_location(ip)
