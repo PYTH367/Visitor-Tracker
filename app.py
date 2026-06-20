@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 
 # ⚠️ Change this to your own secret password!
-SECRET_KEY = "chiku123"  # change this
+SECRET_KEY = "chikumeow"  # change this
 
 VISITORS_FILE = "visitors.json"
 
