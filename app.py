@@ -1,6 +1,7 @@
 from flask import Flask, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 import datetime
+from zoneinfo import ZoneInfo
 import requests
 import json
 import os
@@ -9,7 +10,7 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 
 # ⚠️ Change this to your own secret password!
-SECRET_KEY = "chikumeow"  # change this
+SECRET_KEY = "chiku123"  # change this
 
 VISITORS_FILE = "visitors.json"
 
@@ -80,7 +81,7 @@ def home():
     user_agent = request.headers.get('User-Agent', 'Unknown')
     os_name, browser = detect_system(user_agent)
     location = get_location(ip)
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(ZoneInfo("Asia/Kolkata"))
 
     visitor = {
         "time": str(now),
